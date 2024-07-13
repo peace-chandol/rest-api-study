@@ -3,11 +3,13 @@ const router = express.Router()
 const { getAllUsers, createNewUser, updateUser, deleteUser } = require('../controllers/userController')
 const verifyJWT = require('../middleware/verifyJWT')
 
-router.use(verifyJWT)
+router.route('/')
 
 router.route('/')
-    .get(getAllUsers)
+    .get(verifyJWT, getAllUsers)
     .post(createNewUser)
+
+router.use(verifyJWT)
 
 router.route('/:id')
     .patch(updateUser)
